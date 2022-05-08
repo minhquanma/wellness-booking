@@ -9,6 +9,7 @@ export const ListHeader = styled.div`
   padding: 10px 30px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 `
 export const ListHeaderLabel = styled.span`
   font-weight: bold;

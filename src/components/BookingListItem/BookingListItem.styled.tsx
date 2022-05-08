@@ -8,6 +8,7 @@ export const ListItem = styled.div`
   padding: 30px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   border-right: 5px solid #6366f1;
   border-left: 5px solid #f1a01b;
 `
