@@ -24,6 +24,7 @@ const Dashboard = (props: DashboardProps) => {
 
   useEffect(() => {
     // Fetch all bookings data on screen mount
+    console.log('called')
     dispatch(
       getAllBookings({
         user: user.username,

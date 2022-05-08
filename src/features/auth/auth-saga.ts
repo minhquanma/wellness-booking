@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { call, put, StrictEffect, takeLatest } from "redux-saga/effects";
+import { call, put, StrictEffect, takeLatest, all } from "redux-saga/effects";
 import { loginApi } from "./auth-api";
 import { login,loginSuccess, loginFail, logOut } from "./auth-slice";
 import { LoginPayload } from "./auth-types";
@@ -15,18 +15,18 @@ function getLoginErrorMessage(err: AxiosError) {
   return err.message
 }
 
-function* loginWorker(action: PayloadAction<LoginPayload>): Generator<StrictEffect> {
+function* loginWorker({payload}: PayloadAction<LoginPayload>): Generator<StrictEffect> {
   try {
     // Call login api with provided credentials
-    yield call(loginApi, action.payload);
+    yield call(loginApi, payload);
 
     // Store logged user data
     yield put(loginSuccess({
-      username: action.payload.username
+      username: payload.username
     }));
 
     // Navigate to home screen when logged in successfully
-    action.payload.navigate('/');
+    payload.navigate('/');
 
   } catch (err: AxiosError | any) {
     yield put(loginFail());
@@ -40,8 +40,7 @@ function *logoutWorker(): Generator<StrictEffect> {
 }
 
 function* authSaga() {
-  yield takeLatest(login, loginWorker);
-  yield takeLatest(logOut, logoutWorker);
+  yield all([takeLatest(login, loginWorker), takeLatest(logOut, logoutWorker)])
 }
 
 export default authSaga;

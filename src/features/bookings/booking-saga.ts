@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import { call, put, StrictEffect, takeLatest } from 'redux-saga/effects'
+import { call, put, StrictEffect, takeLatest, all } from 'redux-saga/effects'
 import { createBookingApi, getAllBookingsApi } from './booking-api'
 import {
   getAllBookings,
@@ -12,12 +12,14 @@ import {
 } from './booking-slice'
 import { GetBookingPayload, CreateBookingPayload } from './booking-types'
 
-function* getBookingsWorker(
-  action: PayloadAction<GetBookingPayload>
-): Generator<StrictEffect> {
+function* getBookingsWorker({
+  payload,
+}: PayloadAction<GetBookingPayload>): Generator<StrictEffect> {
   try {
     // Call get all booking api with provided credentials
-    const data: any = yield call(getAllBookingsApi, action.payload)
+    const data: any = yield call(getAllBookingsApi, payload)
+
+    // Filter by created by
 
     // Store bookings data
     yield put(getAllBookingsSuccess(data))
@@ -36,14 +38,15 @@ function* createBookingsWorker(
 
     toast.success(`Booking created successfully`)
 
-    yield put(getAllBookings({
-        user: action.payload.created_by
-    }))
+    yield put(
+      getAllBookings({
+        user: action.payload.created_by,
+      })
+    )
 
     yield put(createBookingSuccess())
     // Callback to parent component when success
     action.payload.onSuccess && action.payload.onSuccess()
-
   } catch (err: any) {
     yield put(createBookingFail())
     toast.error(`Create booking failed: ${err.message}`)
@@ -51,8 +54,10 @@ function* createBookingsWorker(
 }
 
 function* bookingSaga() {
-  yield takeLatest(getAllBookings, getBookingsWorker)
-  yield takeLatest(createBooking, createBookingsWorker)
+  yield all([
+    takeLatest(getAllBookings, getBookingsWorker),
+    takeLatest(createBooking, createBookingsWorker),
+  ])
 }
 
 export default bookingSaga
