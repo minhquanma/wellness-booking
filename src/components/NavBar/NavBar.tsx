@@ -50,7 +50,7 @@ const NavBar = (props: NavBarProps) => {
       <div className="hidden md:flex items-center space-x-3 ">
         {auth.isLoggedIn && (
           <>
-            <p className="font-medium text-gray-500">h1@gmail.com</p>
+            <p className="font-medium text-gray-500">{auth.user.username}</p>
             <button
               className="py-2 px-2 font-medium text-gray-500 rounded hover:bg-indigo-500 hover:text-white transition duration-300"
               onClick={handleLogout}
