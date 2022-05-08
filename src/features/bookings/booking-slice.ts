@@ -25,6 +25,9 @@ const bookingSlice = createSlice({
       state.isLoading = false
       state.isError = true
     },
+    clearAllBookings : (state) => {
+      state.bookings = []
+    },
     createBooking: (state, action: PayloadAction<CreateBookingPayload>) => {
       state.isCreatingBooking = true
     },
@@ -41,6 +44,7 @@ export const {
   getAllBookings,
   getAllBookingsSuccess,
   getAllBookingsFail,
+  clearAllBookings,
   createBooking,
   createBookingSuccess,
   createBookingFail,

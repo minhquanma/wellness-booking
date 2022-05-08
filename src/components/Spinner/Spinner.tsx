@@ -7,9 +7,9 @@ type SpinnerProps = {
 function getSizeClass(size: string) {
   switch (size) {
     case 'lg':
-      return 'w-10 h-10'
+      return 'w-9 h-9'
     case 'md':
-      return 'w-8 h-8'
+      return 'w-7 h-7'
     case 'sm':
       return 'w-4 h-4';
     default:
@@ -19,7 +19,7 @@ function getSizeClass(size: string) {
 
 const Spinner = ({ size = 'sm' }: SpinnerProps) => {
   const spinnerClass =
-    'inline mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-indigo-600 ' +
+    'inline mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-indigo-600 ml-2 mr-2' +
     getSizeClass(size)
   return (
     <svg

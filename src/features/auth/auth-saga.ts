@@ -3,8 +3,9 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { call, put, StrictEffect, takeLatest } from "redux-saga/effects";
 import { loginApi } from "./auth-api";
-import { login,loginSuccess, loginFail } from "./auth-slice";
+import { login,loginSuccess, loginFail, logOut } from "./auth-slice";
 import { LoginPayload } from "./auth-types";
+import { clearAllBookings } from 'features/bookings/booking-slice';
 
 
 function getLoginErrorMessage(err: AxiosError) {
@@ -34,8 +35,13 @@ function* loginWorker(action: PayloadAction<LoginPayload>): Generator<StrictEffe
   }
 }
 
+function *logoutWorker(): Generator<StrictEffect> {
+  yield call(clearAllBookings)
+}
+
 function* authSaga() {
   yield takeLatest(login, loginWorker);
+  yield takeLatest(logOut, logoutWorker);
 }
 
 export default authSaga;

@@ -47,7 +47,7 @@ const Login = (props: LoginProps) => {
   }
 
   const loginButtonClasses = useMemo(() => {
-    return classNames('mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md', {
+    return classNames('mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md inline-flex items-center', {
       'opacity-50 cursor-not-allowed': auth.isLoading,
     })
   }, [auth.isLoading])
