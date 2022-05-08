@@ -9,7 +9,7 @@ const routes = [
     isRequireAuth: true
   },
   {
-    path: '/bookings/*',
+    path: '/bookings',
     component: Bookings,
     isRequireAuth: true
   },

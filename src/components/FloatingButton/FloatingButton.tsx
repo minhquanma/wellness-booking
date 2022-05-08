@@ -1,17 +1,20 @@
 import { memo, MouseEventHandler, ReactNode } from 'react'
 
 type FloatingButtonProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>,
+  onClick: MouseEventHandler<HTMLButtonElement>
   children?: ReactNode
 }
 
 const FloatingButton = ({ onClick }: FloatingButtonProps) => {
   return (
     <div className="lg:fixed    lg:bottom-4 lg:right-4">
-      <button onClick={onClick} className="p-0 w-16 h-16 bg-indigo-600 rounded-full hover:bg-indigo-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
+      <button
+        onClick={onClick}
+        className="p-0 w-16 h-16 bg-indigo-600 rounded-full hover:bg-indigo-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+      >
         <svg
           viewBox="0 0 20 20"
-          enable-background="new 0 0 20 20"
+          enableBackground="new 0 0 20 20"
           className="w-6 h-6 inline-block"
         >
           <path

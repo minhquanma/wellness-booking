@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { RootState, useAppDispatch } from 'redux/store'
+import { useSelector } from 'react-redux'
 
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import NavBar from 'components/NavBar/NavBar'
 
 import routes from 'pages/routes'
-import { useSelector } from 'react-redux'
+import NavBar from 'components/NavBar/NavBar'
 import CreateBooking from 'pages/CreateBookingModal'
 import FloatingButton from 'components/FloatingButton/FloatingButton'
 
 function App() {
-  const dispatch = useAppDispatch()
   const auth = useSelector((state: RootState) => state.auth)
   const [isShowCreateBookingModal, setShowCreateBookingModal] = useState(false)
-
-  useEffect(() => {}, [dispatch])
 
   function toggleCreateBookingModal() {
     setShowCreateBookingModal((isShow) => !isShow)
@@ -32,9 +29,8 @@ function App() {
   )
 
   // Only logged in user has access to the protected routes
-  function renderRoutes() {
-    return routes.map(({ component: Component, path, isRequireAuth }) => {
-      // Redirecto to login page is user not logged in
+  const routeComponents = routes.map(({ component: Component, path, isRequireAuth }) => {
+      // Redirect to to login page is user not logged in
       const protectedRoute = auth.isLoggedIn ? (
         <Component />
       ) : (
@@ -49,7 +45,7 @@ function App() {
         />
       )
     })
-  }
+  
 
   return (
     <div id="app">
@@ -57,7 +53,7 @@ function App() {
       <NavBar />
       {floatButton}
       {createBookingModal}
-      <Routes>{renderRoutes()}</Routes>
+      <Routes>{routeComponents}</Routes>
     </div>
   )
 }
