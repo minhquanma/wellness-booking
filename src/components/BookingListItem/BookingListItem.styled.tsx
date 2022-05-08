@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
+
 export const ListItem = styled.div`
   background-color: white;
-  //border-radius: 30px;
   width: 100%;
   margin-bottom: 20px;
   padding: 30px;

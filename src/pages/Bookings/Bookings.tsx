@@ -45,6 +45,12 @@ const Bookings = (props: BookingProps) => {
         </h3>
         <p className="text-lg text-gray-500">Created by {user.username}</p>
       </S.Heading>
+      <S.ListHeader>
+        <S.ListHeaderLabel>Event Title</S.ListHeaderLabel>
+        <S.ListHeaderLabel>Event Location</S.ListHeaderLabel>
+        <S.ListHeaderLabel>Confirmed Datetime</S.ListHeaderLabel>
+        <S.ListHeaderLabel>Created By</S.ListHeaderLabel>
+      </S.ListHeader>
       {renderBookings()}
     </AppContainer>
   )
