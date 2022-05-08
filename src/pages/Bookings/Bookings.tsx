@@ -27,7 +27,7 @@ const Bookings = (props: BookingProps) => {
         user: user.username,
       })
     )
-  }, [dispatch])
+  }, [dispatch, user.username])
 
   function renderBookings() {
     return bookings.map((item) => (

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { RootState, useAppDispatch } from 'redux/store'
+import { useState, useCallback } from 'react'
+import { RootState } from 'redux/store'
 import { useSelector } from 'react-redux'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -8,19 +8,20 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 import routes from 'pages/routes'
 import NavBar from 'components/NavBar/NavBar'
-import CreateBooking from 'pages/CreateBookingModal'
+import CreateBooking from 'pages/CreateBookingModal/CreateBookingModal'
 import FloatingButton from 'components/FloatingButton/FloatingButton'
 
 function App() {
   const auth = useSelector((state: RootState) => state.auth)
   const [isShowCreateBookingModal, setShowCreateBookingModal] = useState(false)
 
-  function toggleCreateBookingModal() {
+  // Memoize this function to prevent unnecessary re-render of the child component
+  const toggleCreateBookingModal =  useCallback(() => {
     setShowCreateBookingModal((isShow) => !isShow)
-  }
+  }, []);
 
   // Only show if user has logged in
-  const floatButton = auth.isLoggedIn && (
+  const floatingButton = auth.isLoggedIn && (
     <FloatingButton onClick={toggleCreateBookingModal}></FloatingButton>
   )
 
@@ -51,7 +52,7 @@ function App() {
     <div id="app">
       <ToastContainer />
       <NavBar />
-      {floatButton}
+      {floatingButton}
       {createBookingModal}
       <Routes>{routeComponents}</Routes>
     </div>

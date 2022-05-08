@@ -6,6 +6,7 @@ type FloatingButtonProps = {
 }
 
 const FloatingButton = ({ onClick }: FloatingButtonProps) => {
+  console.log('renderd')
   return (
     <div className="lg:fixed    lg:bottom-4 lg:right-4">
       <button

@@ -1,5 +1,5 @@
 import AppContainer from 'components/AppContainer/AppContainer'
-import BookingCard from 'components/BookingCard'
+import BookingCard from 'components/BookingCard/BookingCard'
 import Spinner from 'components/Spinner/Spinner'
 import { getAllBookings } from 'features/bookings/booking-slice'
 import { Booking } from 'features/bookings/booking-types'
@@ -24,13 +24,12 @@ const Dashboard = (props: DashboardProps) => {
 
   useEffect(() => {
     // Fetch all bookings data on screen mount
-    console.log('called')
     dispatch(
       getAllBookings({
         user: user.username,
       })
     )
-  }, [dispatch, user])
+  }, [dispatch, user, user.username])
 
   // 5 latest bookings sort by “created_at” DESCENDING)
   const lastFiveBookings = useMemo(() => {
