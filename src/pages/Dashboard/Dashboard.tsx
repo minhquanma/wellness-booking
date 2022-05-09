@@ -11,9 +11,7 @@ import * as S from './Dashboard.style'
 
 type DashboardProps = {}
 
-function sortBookingByDateDescending(a: Booking, b: Booking) {
-  return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
-}
+
 const Dashboard = (props: DashboardProps) => {
   const dispatch = useAppDispatch()
   const user = useSelector((state: RootState) => state.auth.user)
@@ -38,11 +36,7 @@ const Dashboard = (props: DashboardProps) => {
       (booking) => booking.created_by === user.username
     )
 
-    // Create a copy of the original list because sort fn is mutating the list
-    const sortedBookings = [...bookingsCreatedByCurrentUser].sort(
-      sortBookingByDateDescending
-    )
-    return sortedBookings.slice(0, 5)
+    return bookingsCreatedByCurrentUser.slice(0, 5)
   }, [bookings, user])
 
   function renderBookingCards() {

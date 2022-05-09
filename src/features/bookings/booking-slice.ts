@@ -5,6 +5,10 @@ import {
   GetBookingPayload,
 } from './booking-types'
 
+function sortBookingByDateDescending(a: Booking, b: Booking) {
+  return new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
+}
+
 const bookingSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -18,14 +22,18 @@ const bookingSlice = createSlice({
       state.isLoading = true
     },
     getAllBookingsSuccess: (state, action: PayloadAction<Booking[]>) => {
-      state.bookings = action.payload
+      // Create a copy of the original list because sort fn is mutating the list
+      const sortedBookings = [...action.payload].sort(
+        sortBookingByDateDescending
+      )
+      state.bookings = sortedBookings
       state.isLoading = false
     },
     getAllBookingsFail: (state) => {
       state.isLoading = false
       state.isError = true
     },
-    clearAllBookings : (state) => {
+    clearAllBookings: (state) => {
       state.bookings = []
     },
     createBooking: (state, action: PayloadAction<CreateBookingPayload>) => {
